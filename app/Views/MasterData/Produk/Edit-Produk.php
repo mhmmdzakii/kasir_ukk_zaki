@@ -1,0 +1,109 @@
+<?= $this->extend('Dashboard');?>
+<?= $this->section('Konten');?>
+<?=isset($introText) ? $introText : null;?>
+
+<?php if (session()->has('errors')) : ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+<i class="bi bi-exclamation-triangle me-1"></i>
+  <?php foreach (session('errors') as $error) : ?>
+   
+      <?= $error; ?>
+    
+    <?php endforeach; ?>
+ </div>
+ <?php endif; ?>
+
+<form method="POST" action="<?=site_url('update-produk');?>">
+                <div class="row mb-3">
+                  <label for="id_pengguna" class="col-sm-3 col-form-label">Kode Produk</label>
+                  <div class="col-sm-7">
+                  <input type="hidden" class="form-control" id="id_produk"  value="<?= $detailProduk[0]['id_produk']; ?>" name="id_produk" placeholder="">
+                    <input type="text" class="form-control" id="kode_produk"  value="<?= $detailProduk[0]['kode_produk']; ?>" name="kode_produk" placeholder="Masukkan Kode Produk">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="" class="col-sm-3 col-form-label">Nama Produk</label>
+                  <div class="col-sm-7">
+                  <input type="text" class="form-control" id="nama_produk"  value="<?= $detailProduk[0]['nama_produk']; ?>" name="nama_produk" placeholder="Masukkan nama produk">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="" class="col-sm-3 col-form-label">Nama Satuan</label>
+                  <div class="col-sm-7">
+                  <select class="form-control" id="inputJenis" value="<?= $detailProduk[0]['id_satuan']; ?>" name="id_satuan">
+                  <option value="">pilih Satuan</option>
+                  <?php
+
+if (isset($satuan)) {
+    $no = null;
+    foreach ($satuan as $baris) {
+        $no++;
+        // auto select saat edit
+        $detailProduk[0]['id_satuan'] == $baris['id_satuan'] ? $pilih='selected' : $pilih=null;
+        
+        echo '<option '.$pilih.' value="' . $baris['id_satuan'] . '">' . $baris['nama_satuan'] . ' </option>';
+    }
+} 
+
+?>
+          </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="" class="col-sm-3 col-form-label">Nama Kategori</label>
+                  <div class="col-sm-7">
+                  <select class="form-control" id="inputJenis" value="<?= $detailProduk[0]['id_kategori']; ?>" name="id_kategori">
+                  <option value="">pilih Kategori</option>
+                  <?php
+
+if (isset($kategori)) {
+    $no = null;
+    foreach ($kategori as $baris) {
+        $no++;
+// auto select option saat edit
+// operator ternary    cek_value ?  true : false ;
+
+        $detailProduk[0]['id_kategori'] == $baris['id_kategori'] ? $pilih='selected' : $pilih=null;
+
+        echo '<option  '.$pilih.' value="' . $baris['id_kategori'] . '">' . $baris['nama_kategori'] . '</option>';
+    }
+}
+
+?>
+          </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="" class="col-sm-3 col-form-label">Harga Beli</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control uang" id="harga_beli" value="<?= $detailProduk[0]['harga_beli']; ?>" name="harga_beli" placeholder="Masukkan Harga Beli">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="" class="col-sm-3 col-form-label">harga Jual</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control uang" id="harga_jual" value="<?= $detailProduk[0]['harga_jual']; ?>" name="harga_jual" placeholder="Masukkan Harga Jual">
+                  </div>
+                </div>
+
+                
+                
+                
+
+                <div class="row mb-3">
+                <label for="inputStok" class="col-sm col-form-label">Stok</label>
+                <div class="col-sm-9">
+                    <input type="number" class="form-control" id="stok" value="<?= $detailProduk[0]['stok']; ?>" name="stok">
+                </div>
+            </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-3 col-form-label">Simpan Data</label>
+                  <div class="col-sm-7">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                  </div>
+                </div>
+
+<?= $this->endSection();?>
